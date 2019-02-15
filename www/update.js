@@ -9,9 +9,11 @@ var Update = {
    * @param {String} apiAddress 检查更新API地址
    * @param {bool}   wifiOnly   仅仅使用wi-fi 默认 false
    */
-  init: function (apiAddress, wifiOnly) {
+  init: function (apiAddress, wifiOnly,versionCode) {
+
     if (typeof (wifiOnly) !== 'undefined') Update.wifiOnly = wifiOnly ? true : false;
     Update.apiAddress = apiAddress;
+    Update.versionCode=versionCode;
   },
 
   /**

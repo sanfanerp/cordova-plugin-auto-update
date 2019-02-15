@@ -19,17 +19,17 @@ public class Update extends CordovaPlugin {
 
     public boolean execute(String action, final JSONArray args, final CallbackContext callback) throws JSONException {
         if (ACTION_CHECK.equals(action)) {
-            checkUpdate(false, args.getString(0), args.getBoolean(1));
+            checkUpdate(false, args.getString(0), args.getBoolean(1),args.getInt(2));
             return true;
         } else if (ACTION_MANUAL_CHECK.equals(action)) {
-            checkUpdate(true, args.getString(0), args.getBoolean(1));
+            checkUpdate(true, args.getString(0), args.getBoolean(1),args.getInt(2));
             return true;
         }
         return false;
     }
 
-    private void checkUpdate(boolean isManual, String apiAddress, boolean wifiOnly) {
-        String url = String.format("%s?versionName=%s&from=cordova-update",
+    private void checkUpdate(boolean isManual, String apiAddress, boolean wifiOnly,int versionCode) {
+        String url = String.format("%s?versionCode=%s&from=cordova-update",
                 apiAddress,
                 getVersionName());
 
@@ -53,5 +53,22 @@ public class Update extends CordovaPlugin {
             e.printStackTrace();
             return "0.0.0";
         }
+    }
+    /**
+     * 获取当前本地apk的版本
+     *
+     * @param mContext
+     * @return
+     */
+    public static int getVersionCode(Context mContext) {
+        int versionCode = 0;
+        try {
+            //获取软件版本号，对应AndroidManifest.xml下android:versionCode
+            versionCode = mContext.getPackageManager().
+                    getPackageInfo(mContext.getPackageName(), 0).versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return versionCode;
     }
 }

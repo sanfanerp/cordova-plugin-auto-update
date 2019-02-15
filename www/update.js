@@ -2,6 +2,7 @@
 var Update = {
   apiAddress: null,
   wifiOnly: false,
+  versionCode:0,
 
   /**
    * 初始化
@@ -17,10 +18,10 @@ var Update = {
    * 检查更新
    */
   check: function() {
-    cordova.exec(null, null, "Update", "check", [Update.apiAddress, Update.wifiOnly]);
+    cordova.exec(null, null, "Update", "check", [Update.apiAddress, Update.wifiOnly,Update.versionCode]);
   },
   manualCheck: function () {
-    cordova.exec(null, null, "Update", "manual-check", [Update.apiAddress, Update.wifiOnly]);
+    cordova.exec(null, null, "Update", "manual-check", [Update.apiAddress, Update.wifiOnly,Update.versionCode]);
   }
 };
 

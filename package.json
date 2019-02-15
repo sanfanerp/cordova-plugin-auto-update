@@ -10,7 +10,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/yanglb/cordova-plugin-auto-update"
+        "url": "https://github.com/sanfanerp/cordova-plugin-auto-update"
     },
     "keywords": [
         "update",
@@ -22,7 +22,7 @@
     "author": "yanglb.com",
     "license": "Apache 2.0",
     "bugs": {
-        "url": "https://github.com/yanglb/cordova-plugin-auto-update/issues"
+        "url": "https://github.com/sanfanerp/cordova-plugin-auto-update/issues"
     },
-    "homepage": "https://github.com/yanglb/cordova-plugin-auto-update"
+    "homepage": "https://github.com/sanfanerp/cordova-plugin-auto-update"
 }

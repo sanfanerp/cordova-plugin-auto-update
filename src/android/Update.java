@@ -31,7 +31,7 @@ public class Update extends CordovaPlugin {
     private void checkUpdate(boolean isManual, String apiAddress, boolean wifiOnly,int versionCode) {
         String url = String.format("%s?versionCode=%s&from=cordova-update",
                 apiAddress,
-                getVersionName());
+                versionCode);
 
         Log.d(TAG, "检查更新: " + url);
 

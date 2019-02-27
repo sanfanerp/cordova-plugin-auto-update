@@ -157,7 +157,7 @@ public class UpdateUtil {
     public static void install(Context context, File file, boolean force) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        FileProvider7.setIntentDataAndType(this,
+        FileProvider7.setIntentDataAndType(context,
                         intent, "application/vnd.android.package-archive", file, true);
 
 

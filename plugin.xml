@@ -68,6 +68,7 @@
         
         <!-- ezy.boost.update -->
         <source-file src="src/android/res/update_cache_path.xml" target-dir="res/xml" />
+        <source-file src="src/android/res/file_paths.xml" target-dir="res/xml" />
 
         <source-file src="src/android/ezy/boost/update/DefaultDownloadListener.java" target-dir="src/ezy/boost/update" />
         <source-file src="src/android/ezy/boost/update/DefaultPromptClickListener.java" target-dir="src/ezy/boost/update" />

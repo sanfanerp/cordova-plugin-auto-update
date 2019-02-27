@@ -49,6 +49,17 @@
                     android:resource="@xml/update_cache_path"/>
             </provider>
         </config-file>
+        <config-file target="AndroidManifest.xml" parent="/manifest/application" mode="merge">
+            <provider
+                    android:name="android.support.v4.content.FileProvider"
+                    android:authorities="${applicationId}.fileprovider"
+                    android:exported="false"
+                    android:grantUriPermissions="true">
+                <meta-data
+                        android:name="android.support.FILE_PROVIDER_PATHS"
+                        android:resource="@xml/file_paths" />
+            </provider>
+        </config-file>
 
         <framework src="com.android.support:support-annotations:25.0.0" />
         <framework src="com.android.support:appcompat-v7:25.0.0" />

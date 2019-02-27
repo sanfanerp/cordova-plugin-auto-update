@@ -27,6 +27,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.content.FileProvider;
+import ezy.boost.update.FileProvider7;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;

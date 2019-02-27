@@ -1,4 +1,4 @@
-package omponention.lwj.com.permissionlib.utils;
+package ezy.boost.update;
 
 import android.content.Context;
 import android.content.Intent;

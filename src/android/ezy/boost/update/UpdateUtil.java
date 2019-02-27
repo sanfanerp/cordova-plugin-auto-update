@@ -111,7 +111,7 @@ public class UpdateUtil {
         String md5 = context.getSharedPreferences(PREFS, 0).getString(KEY_UPDATE, "");
         File apk = new File(context.getExternalCacheDir(), md5 + ".apk");
         if (UpdateUtil.verify(apk, md5)) {
-            install(context, apk, force);
+            openAPKFile(context, apk, force);
         }
     }
     /**

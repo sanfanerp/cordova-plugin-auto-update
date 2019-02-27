@@ -120,7 +120,7 @@ public class UpdateUtil {
       * @param mContext
       * @param fileUri
       */
-      public void openAPKFile(Context context, File file, boolean force) {
+      public void openAPKFile(Context mContext, String fileUri, boolean force) {
         // 核心是下面几句代码
         if (null != fileUri) {
           try {

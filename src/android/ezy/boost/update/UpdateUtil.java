@@ -156,19 +156,12 @@ public class UpdateUtil {
 
     public static void install(Context context, File file, boolean force) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
-
-
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.addCategory(Intent.CATEGORY_DEFAULT);
-            intent.setAction(Settings.ACTION_SETTINGS);
-            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);//添加这一句表示对目标应用临时授权该Uri所代表的文件
             intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
         } else {
-            Uri uri = FileProvider.getUriForFile(context, context.getPackageName() + ".fileprovider", file);
-            intent.addCategory(Intent.CATEGORY_DEFAULT);
+            Uri uri = FileProvider.getUriForFile(context, context.getPackageName() + ".updatefileprovider", file);
             intent.setDataAndType(uri, "application/vnd.android.package-archive");
-            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         }
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);

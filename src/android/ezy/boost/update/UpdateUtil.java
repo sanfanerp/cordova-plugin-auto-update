@@ -27,7 +27,6 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.support.v4.content.FileProvider;
-import ezy.boost.update.FileProvider7;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
@@ -157,24 +156,21 @@ public class UpdateUtil {
 
     public static void install(Context context, File file, boolean force) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        FileProvider7.setIntentDataAndType(context,
-                        intent, "application/vnd.android.package-archive", file, true);
 
 
-        //if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-        //    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        //    intent.addCategory(Intent.CATEGORY_DEFAULT);
-        //    intent.setAction(Settings.ACTION_SETTINGS);
-        //    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);//添加这一句表示对目标应用临时授权该Uri所代表的文件
-        //    intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
-        //} else {
-        //    Uri uri = FileProvider.getUriForFile(context, context.getPackageName() + ".fileprovider", file);
-        //    intent.addCategory(Intent.CATEGORY_DEFAULT);
-        //    intent.setDataAndType(uri, "application/vnd.android.package-archive");
-        //    intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-        //}
-        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addCategory(Intent.CATEGORY_DEFAULT);
+            intent.setAction(Settings.ACTION_SETTINGS);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);//添加这一句表示对目标应用临时授权该Uri所代表的文件
+            intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+        } else {
+            Uri uri = FileProvider.getUriForFile(context, context.getPackageName() + ".fileprovider", file);
+            intent.addCategory(Intent.CATEGORY_DEFAULT);
+            intent.setDataAndType(uri, "application/vnd.android.package-archive");
+            intent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        }
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
         if (force) {
             System.exit(0);

@@ -108,52 +108,50 @@ public class UpdateUtil {
 
     public static void install(Context context, boolean force) {
         String md5 = context.getSharedPreferences(PREFS, 0).getString(KEY_UPDATE, "");
-        String fileUri=context.getExternalCacheDir(), md5 + ".apk";
         File apk = new File(context.getExternalCacheDir(), md5 + ".apk");
         if (UpdateUtil.verify(apk, md5)) {
-            openAPKFile(context, fileUri, force);
+            openAPKFile(context, apk, force);
         }
     }
-     /**
-      * 打开安装包
-      *
-      * @param mContext
-      * @param fileUri
-      */
-      public void openAPKFile(Context mContext, String fileUri, boolean force) {
-        // 核心是下面几句代码
-        if (null != fileUri) {
-          try {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            File apkFile = new File(fileUri);
-            //兼容7.0
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-              intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-              Uri contentUri = FileProvider.getUriForFile(mContext, mContext.getPackageName() + ".fileProvider", apkFile);
-              intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
-              //兼容8.0
-              if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                boolean hasInstallPermission = mContext.getPackageManager().canRequestPackageInstalls();
-                if (!hasInstallPermission) {
-                  //注意这个是8.0新API
-                   Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES);
-                   intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                   mContext.startActivity(intent);
-                  return;
-                }
-              }
-            } else {
-              intent.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
-              intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            }
-            if (mContext.getPackageManager().queryIntentActivities(intent, 0).size() > 0) {
-              mContext.startActivity(intent);
-            }
-          } catch (Throwable e) {
-            e.printStackTrace();
-          }
-        }
-      }
+    /**
+       * 打开安装包
+       *
+       * @param mContext
+       * @param fileUri
+       */
+   public static void openAPKFile(Context mContext, File fileUri, boolean force) {
+     // 核心是下面几句代码
+     if (null != fileUri) {
+       try {
+         Intent intent = new Intent(Intent.ACTION_VIEW);
+         //兼容7.0
+         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+           intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+           Uri contentUri = FileProvider.getUriForFile(mContext, mContext.getPackageName() + ".fileProvider", fileUri);
+           intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
+           //兼容8.0
+           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+             boolean hasInstallPermission = mContext.getPackageManager().canRequestPackageInstalls();
+             if (!hasInstallPermission) {
+               //注意这个是8.0新API
+                Intent intent1 = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
+               return;
+             }
+           }
+         } else {
+           intent.setDataAndType(Uri.fromFile(fileUri), "application/vnd.android.package-archive");
+           intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+         }
+         if (mContext.getPackageManager().queryIntentActivities(intent, 0).size() > 0) {
+           mContext.startActivity(intent);
+         }
+       } catch (Throwable e) {
+         e.printStackTrace();
+       }
+     }
+   }
 
     public static void install(Context context, File file, boolean force) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
